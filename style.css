@@ -1,0 +1,120 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    background: #000;
+}
+
+/* ===== الجسيمات والبلورات المتحركة ===== */
+#particles-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 9999 !important; /* أعلى من الدائرة وأعلى من الصور */
+    pointer-events: none; /* هامة جداً لكي لا تمنع اللمس والنقر */
+}
+
+/* ===== الشاشات ===== */
+.screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== شاشة الصور الخلفية ===== */
+#invitationScreen {
+    z-index: 5;
+    padding: 0;
+    transition: filter 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#invitationScreen.initial-blur {
+    filter: blur(20px);
+}
+
+.invitation-wrapper {
+    width: 100%;
+    height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.invitation-wrapper::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+.invitation-scroll {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    display: block;
+}
+
+/* ===== شاشة الدائرة الصغيرة ===== */
+#circleScreen {
+    background: transparent;
+    z-index: 20; /* تحت البلورات وفوق الصور */
+    transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+#circleScreen.fade-out {
+    opacity: 0;
+    transform: scale(1.05);
+    pointer-events: none;
+}
+
+.circle-container {
+    text-align: center;
+}
+
+.circle-img {
+    width: 250px; /* تم تعديل الحجم إلى 150px */
+    height: 250px; /* تم تعديل الحجم إلى 150px */
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5) !important; 
+}
+
+/* تأثير خفيف عند تمرير الماوس فوق الدائرة (يكبر الحجم ويزيد الشادو الرمادي) */
+.circle-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.7) !important;
+}
+
+.circle-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 35px rgba(78, 77, 77, 0.9);
+}
+
+/* ===== تحسينات للجوال ===== */
+@media (max-width: 600px) {
+    .circle-img {
+        width: 120px; /* أو اجعلها 150px إذا كنت لا تريدها أن تصغر أبداً */
+        height: 120px;
+    }
+    
+    .invitation-scroll {
+        max-width: 100%;
+    }
+}

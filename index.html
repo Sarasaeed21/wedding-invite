@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة زفاف</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+</head>
+<body>
+
+    <div id="particles-bg"></div>
+
+    <audio id="bgMusic" loop preload="auto" style="display:none;">
+        <source src="sounds/music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="invitationScreen" class="screen initial-blur">
+        <div class="invitation-wrapper" id="invitationWrapper">
+            <img src="images/photo_2026-06-24_07-30-20.jpg" class="invitation-scroll">
+            <img src="images/photo_2026-06-24_07-30-20.jpg" class="invitation-scroll">
+        </div>
+    </div>
+
+    <div id="circleScreen" class="screen">
+        <div class="circle-container">
+            <img src="images/img1.png" class="circle-img" id="enterBtn">
+        </div>
+    </div>
+
+    <script>
+        // ===== كود تفعيل وتشغيل الجسيمات (البلورات) =====
+        tsParticles.load("particles-bg", {
+            particles: {
+                number: {
+                    value: 80, // عدد البلورات
+                    density: { enable: true, area: 800 }
+                },
+                color: { value: "#ffffff" }, // لون البلورات (أبيض)
+                shape: { type: "circle" }, // شكلها دوائر صغيرة
+                opacity: {
+                    value: 0.7,
+                    random: true,
+                    anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
+                },
+                size: {
+                    value: { min: 2, max: 6 }, // أحجام عشوائية للبلورات لتبدو كالبريق
+                    random: true
+                },
+                move: {
+                    enable: true,
+                    speed: 2, // سرعة التساقط والحركة
+                    direction: "bottom", // تتساقط لأسفل كالمطر والثلج
+                    random: true,
+                    straight: false,
+                    outModes: { default: "out" }
+                }
+            },
+            interactivity: { enable: false },
+            retina_detect: true
+        });
+
+        // ===== كود التحكم في الدائرة والتلاشي والسكرول =====
+        const enterBtn = document.getElementById('enterBtn');
+        const circleScreen = document.getElementById('circleScreen');
+        const invitationScreen = document.getElementById('invitationScreen');
+        const wrapper = document.getElementById('invitationWrapper');
+        const bgMusic = document.getElementById('bgMusic');
+
+        let scrollInterval;
+        const speed = 1;
+
+        wrapper.style.overflowY = 'hidden';
+
+        enterBtn.addEventListener('click', () => {
+            circleScreen.classList.add('fade-out');
+            invitationScreen.classList.remove('initial-blur');
+            wrapper.style.overflowY = 'auto';
+
+            if(bgMusic) {
+                bgMusic.play().catch(err => console.log(err));
+            }
+
+            setTimeout(() => {
+                circleScreen.style.display = 'none';
+                startAutoScroll();
+            }, 1500); 
+        });
+
+        function startAutoScroll() {
+            scrollInterval = setInterval(() => {
+                const previousScrollTop = wrapper.scrollTop;
+                wrapper.scrollTop += speed;
+
+                if (wrapper.scrollTop === previousScrollTop) {
+                    clearInterval(scrollInterval);
+                }
+            }, 16);
+        }
+
+        wrapper.addEventListener('touchstart', () => clearInterval(scrollInterval));
+        wrapper.addEventListener('pointerdown', () => clearInterval(scrollInterval));
+    </script>
+
+</body>
+</html>
